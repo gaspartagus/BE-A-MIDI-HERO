@@ -1,0 +1,11 @@
+{
+  "name": "midi-trainer",
+  "version": "0.0.1",
+
+  "dependencies": {
+    "fs": "latest",
+    "midi-converter": "latest",
+    "lodash": "latest",
+    "eyes": "latest"
+  }
+}
