@@ -1,6 +1,6 @@
 /* Browserify gives us the power of npm ! */
 var midiConverter = require('midi-converter');
-var eyes = require('eyes'),
+// var eyes = require('eyes'),
 	_ = require('lodash')
 
 var log = console.log.bind(console);
@@ -29,7 +29,7 @@ var midi2json = function midi2json(blob) {
 	// tempo = 1000;
 	var beatsPerMinute = 60000/tempo;
 	// en ms per beat
-	
+
 	var scale = 1000*tempo/header.ticksPerBeat;
 
 	var tracks = jsonSong.tracks.map(function(arr){
@@ -37,7 +37,7 @@ var midi2json = function midi2json(blob) {
 	});
 
 	var songName = tracks.shift();
-	
+
 
 	log(header,songName,tracks,beatsPerMinute)
 
@@ -58,8 +58,8 @@ var midi2json = function midi2json(blob) {
 			return [obj.deltaTime,obj.subtype,obj.noteNumber]
 	});
 
-	
-	
+
+
 	clearInterval(timerObj);
 
 
@@ -112,7 +112,7 @@ var midi2json = function midi2json(blob) {
 	function renderLoopRAF(){
 
 	  var currTime = (new Date().getTime() - debut) / tempo;
-	  
+
 	  timeRAF.innerHTML = Math.floor(currTime)-1;
 
 		if (window.requestAnimationFrame) window.requestAnimationFrame(renderLoopRAF);
