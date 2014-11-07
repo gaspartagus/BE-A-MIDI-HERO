@@ -1,6 +1,6 @@
 /* Browserify gives us the power of npm ! */
 var midiConverter = require('midi-converter');
-// var eyes = require('eyes'),
+var eyes = require('eyes'),
 	_ = require('lodash')
 
 var log = console.log.bind(console);
@@ -29,7 +29,7 @@ var midi2json = function midi2json(blob) {
 	// tempo = 1000;
 	var beatsPerMinute = 60000/tempo;
 	// en ms per beat
-
+	
 	var scale = 1000*tempo/header.ticksPerBeat;
 
 	var tracks = jsonSong.tracks.map(function(arr){
@@ -37,7 +37,7 @@ var midi2json = function midi2json(blob) {
 	});
 
 	var songName = tracks.shift();
-
+	
 
 	log(header,songName,tracks,beatsPerMinute)
 
@@ -58,8 +58,8 @@ var midi2json = function midi2json(blob) {
 			return [obj.deltaTime,obj.subtype,obj.noteNumber]
 	});
 
-
-
+	
+	
 	clearInterval(timerObj);
 
 
@@ -67,15 +67,37 @@ var midi2json = function midi2json(blob) {
 			latencyEl = $('#latency'),
 			precisionEl = $('#precision');
 
+	// function timer(){
+	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
+	// 		derive = measuredBeat - Math.floor(measuredBeat);
+	// 	//log('derive',derive,measuredBeat)
 
-	debut = performance.now();
+	// 	timeEl.html(nBeat);
+	// 	nBeat += 1;
+
+	// 	if( derive * 100 > 1 ) {
+	// 		clearInterval(timerObj);
+	// 		timeoutObj = setTimeout(timeout,tempo - derive * tempo - 0)
+	// 	}
+	// }
+	// function timeout(){
+	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
+	// 		derive = measuredBeat - Math.floor(measuredBeat);
+	// 	log('derive',derive,measuredBeat);
+
+	// 	timeEl.html(nBeat);
+	// 	nBeat += 1;
+	// 	timerObj = setInterval(timer, tempo);
+	// }
+
+	debut = new Date().getTime();
 
 	// timerObj = setInterval(timer, tempo);
 
 	window.onkeydown = function(e) {
 
 		var measuredHit = (e.timeStamp - debut) / tempo,
-				latency = measuredHit - Math.floor(measuredHit);
+			latency = measuredHit - Math.floor(measuredHit);
 
 		var coords = closestInt(measuredHit)
 		keyInts.push(coords[0]);
@@ -89,8 +111,8 @@ var midi2json = function midi2json(blob) {
 
 	function renderLoopRAF(){
 
-	  var currTime = (performance.now() - debut) / tempo;
-
+	  var currTime = (new Date().getTime() - debut) / tempo;
+	  
 	  timeRAF.innerHTML = Math.floor(currTime)-1;
 
 		if (window.requestAnimationFrame) window.requestAnimationFrame(renderLoopRAF);
@@ -107,17 +129,8 @@ var midi2json = function midi2json(blob) {
 
 }
 
-function draw() {
-  var canvas = document.getElementById('canvas');
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
 
-    ctx.fillRect(25,25,100,100);
-    ctx.clearRect(45,45,60,60);
-    ctx.strokeRect(50,50,50,50);
-  }
-}
-draw();
+
 
 // Math helpers
 
