@@ -1,7 +1,7 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/gaspard/Projects/canalplus/midi/midi.js":[function(require,module,exports){
 /* Browserify gives us the power of npm ! */
 var midiConverter = require('midi-converter');
-var eyes = require('eyes'),
+// var eyes = require('eyes'),
 	_ = require('lodash')
 
 var log = console.log.bind(console);
@@ -30,7 +30,7 @@ var midi2json = function midi2json(blob) {
 	// tempo = 1000;
 	var beatsPerMinute = 60000/tempo;
 	// en ms per beat
-	
+
 	var scale = 1000*tempo/header.ticksPerBeat;
 
 	var tracks = jsonSong.tracks.map(function(arr){
@@ -38,7 +38,7 @@ var midi2json = function midi2json(blob) {
 	});
 
 	var songName = tracks.shift();
-	
+
 
 	log(header,songName,tracks,beatsPerMinute)
 
@@ -59,8 +59,8 @@ var midi2json = function midi2json(blob) {
 			return [obj.deltaTime,obj.subtype,obj.noteNumber]
 	});
 
-	
-	
+
+
 	clearInterval(timerObj);
 
 
@@ -68,37 +68,15 @@ var midi2json = function midi2json(blob) {
 			latencyEl = $('#latency'),
 			precisionEl = $('#precision');
 
-	// function timer(){
-	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
-	// 		derive = measuredBeat - Math.floor(measuredBeat);
-	// 	//log('derive',derive,measuredBeat)
 
-	// 	timeEl.html(nBeat);
-	// 	nBeat += 1;
-
-	// 	if( derive * 100 > 1 ) {
-	// 		clearInterval(timerObj);
-	// 		timeoutObj = setTimeout(timeout,tempo - derive * tempo - 0)
-	// 	}
-	// }
-	// function timeout(){
-	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
-	// 		derive = measuredBeat - Math.floor(measuredBeat);
-	// 	log('derive',derive,measuredBeat);
-
-	// 	timeEl.html(nBeat);
-	// 	nBeat += 1;
-	// 	timerObj = setInterval(timer, tempo);
-	// }
-
-	debut = new Date().getTime();
+	debut = performance.now();
 
 	// timerObj = setInterval(timer, tempo);
 
 	window.onkeydown = function(e) {
 
 		var measuredHit = (e.timeStamp - debut) / tempo,
-			latency = measuredHit - Math.floor(measuredHit);
+				latency = measuredHit - Math.floor(measuredHit);
 
 		var coords = closestInt(measuredHit)
 		keyInts.push(coords[0]);
@@ -112,8 +90,8 @@ var midi2json = function midi2json(blob) {
 
 	function renderLoopRAF(){
 
-	  var currTime = (new Date().getTime() - debut) / tempo;
-	  
+	  var currTime = (performance.now() - debut) / tempo;
+
 	  timeRAF.innerHTML = Math.floor(currTime)-1;
 
 		if (window.requestAnimationFrame) window.requestAnimationFrame(renderLoopRAF);
@@ -130,8 +108,17 @@ var midi2json = function midi2json(blob) {
 
 }
 
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
 
-
+    ctx.fillRect(25,25,100,100);
+    ctx.clearRect(45,45,60,60);
+    ctx.strokeRect(50,50,50,50);
+  }
+}
+draw();
 
 // Math helpers
 
@@ -261,7 +248,7 @@ $(document).on('dragenter', function (e) {
     e.preventDefault();
 });
 
-},{"eyes":7,"lodash":2,"midi-converter":4}],2:[function(require,module,exports){
+},{"lodash":"/Users/gaspard/Projects/canalplus/midi/node_modules/lodash/dist/lodash.js","midi-converter":"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/lib/midi-converter.js"}],"/Users/gaspard/Projects/canalplus/midi/node_modules/lodash/dist/lodash.js":[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -7050,8 +7037,8 @@ $(document).on('dragenter', function (e) {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],3:[function(require,module,exports){
-module.exports=[
+},{}],"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/lib/instruments.json":[function(require,module,exports){
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=[
   {"hexcode":"0x00", "family":"Piano", "instrument":"Acoustic Grand Piano"},
   {"hexcode":"0x01", "family":"Piano", "instrument":"Bright Acoustic Piano"},
   {"hexcode":"0x02", "family":"Piano", "instrument":"Electric Grand Piano"},
@@ -7182,7 +7169,7 @@ module.exports=[
   {"hexcode":"0x7F", "family":"Sound Effects", "instrument":"Gunshot"}
 ]
 
-},{}],4:[function(require,module,exports){
+},{}],"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/lib/midi-converter.js":[function(require,module,exports){
 var fs = require('fs')
   , midiParser = require('midi-file-parser')
   , path = require('path')
@@ -7234,7 +7221,7 @@ module.exports = {
   }
 };
 
-},{"./instruments.json":3,"fs":8,"jsmidgen":5,"midi-file-parser":6,"path":9}],5:[function(require,module,exports){
+},{"./instruments.json":"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/lib/instruments.json","fs":"/usr/local/lib/node_modules/watchify/node_modules/browserify/lib/_empty.js","jsmidgen":"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/node_modules/jsmidgen/lib/jsmidgen.js","midi-file-parser":"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/node_modules/midi-file-parser/index.js","path":"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/path-browserify/index.js"}],"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/node_modules/jsmidgen/lib/jsmidgen.js":[function(require,module,exports){
 (function(exports) {
 
 	var DEFAULT_VOLUME   = exports.DEFAULT_VOLUME   = 90;
@@ -7639,7 +7626,7 @@ module.exports = {
 
 })(module.exports);
 
-},{}],6:[function(require,module,exports){
+},{}],"/Users/gaspard/Projects/canalplus/midi/node_modules/midi-converter/node_modules/midi-file-parser/index.js":[function(require,module,exports){
 // https://github.com/gasman/jasmid
 //
 //
@@ -7952,249 +7939,9 @@ function Stream(str) {
 		'readVarInt': readVarInt
 	}
 }
-},{}],7:[function(require,module,exports){
-(function (process){
-//
-// Eyes.js - a customizable value inspector for Node.js
-//
-//   usage:
-//
-//       var inspect = require('eyes').inspector({styles: {all: 'magenta'}});
-//       inspect(something); // inspect with the settings passed to `inspector`
-//
-//     or
-//
-//       var eyes = require('eyes');
-//       eyes.inspect(something); // inspect with the default settings
-//
-var eyes = exports,
-    stack = [];
+},{}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/lib/_empty.js":[function(require,module,exports){
 
-eyes.defaults = {
-    styles: {                 // Styles applied to stdout
-        all:     'cyan',      // Overall style applied to everything
-        label:   'underline', // Inspection labels, like 'array' in `array: [1, 2, 3]`
-        other:   'inverted',  // Objects which don't have a literal representation, such as functions
-        key:     'bold',      // The keys in object literals, like 'a' in `{a: 1}`
-        special: 'grey',      // null, undefined...
-        string:  'green',
-        number:  'magenta',
-        bool:    'blue',      // true false
-        regexp:  'green',     // /\d+/
-    },
-    pretty: true,             // Indent object literals
-    hideFunctions: false,
-    showHidden: false,
-    stream: process.stdout,
-    maxLength: 2048           // Truncate output if longer
-};
-
-// Return a curried inspect() function, with the `options` argument filled in.
-eyes.inspector = function (options) {
-    var that = this;
-    return function (obj, label, opts) {
-        return that.inspect.call(that, obj, label,
-            merge(options || {}, opts || {}));
-    };
-};
-
-// If we have a `stream` defined, use it to print a styled string,
-// if not, we just return the stringified object.
-eyes.inspect = function (obj, label, options) {
-    options = merge(this.defaults, options || {});
-
-    if (options.stream) {
-        return this.print(stringify(obj, options), label, options);
-    } else {
-        return stringify(obj, options) + (options.styles ? '\033[39m' : '');
-    }
-};
-
-// Output using the 'stream', and an optional label
-// Loop through `str`, and truncate it after `options.maxLength` has been reached.
-// Because escape sequences are, at this point embeded within
-// the output string, we can't measure the length of the string
-// in a useful way, without separating what is an escape sequence,
-// versus a printable character (`c`). So we resort to counting the
-// length manually.
-eyes.print = function (str, label, options) {
-    for (var c = 0, i = 0; i < str.length; i++) {
-        if (str.charAt(i) === '\033') { i += 4 } // `4` because '\033[25m'.length + 1 == 5
-        else if (c === options.maxLength) {
-           str = str.slice(0, i - 1) + '…';
-           break;
-        } else { c++ }
-    }
-    return options.stream.write.call(options.stream, (label ?
-        this.stylize(label, options.styles.label, options.styles) + ': ' : '') +
-        this.stylize(str,   options.styles.all, options.styles) + '\033[0m' + "\n");
-};
-
-// Apply a style to a string, eventually,
-// I'd like this to support passing multiple
-// styles.
-eyes.stylize = function (str, style, styles) {
-    var codes = {
-        'bold'      : [1,  22],
-        'underline' : [4,  24],
-        'inverse'   : [7,  27],
-        'cyan'      : [36, 39],
-        'magenta'   : [35, 39],
-        'blue'      : [34, 39],
-        'yellow'    : [33, 39],
-        'green'     : [32, 39],
-        'red'       : [31, 39],
-        'grey'      : [90, 39]
-    }, endCode;
-
-    if (style && codes[style]) {
-        endCode = (codes[style][1] === 39 && styles.all) ? codes[styles.all][0]
-                                                         : codes[style][1];
-        return '\033[' + codes[style][0] + 'm' + str +
-               '\033[' + endCode + 'm';
-    } else { return str }
-};
-
-// Convert any object to a string, ready for output.
-// When an 'array' or an 'object' are encountered, they are
-// passed to specialized functions, which can then recursively call
-// stringify().
-function stringify(obj, options) {
-    var that = this, stylize = function (str, style) {
-        return eyes.stylize(str, options.styles[style], options.styles)
-    }, index, result;
-
-    if ((index = stack.indexOf(obj)) !== -1) {
-        return stylize(new(Array)(stack.length - index + 1).join('.'), 'special');
-    }
-    stack.push(obj);
-
-    result = (function (obj) {
-        switch (typeOf(obj)) {
-            case "string"   : obj = stringifyString(obj.indexOf("'") === -1 ? "'" + obj + "'"
-                                                                            : '"' + obj + '"');
-                              return stylize(obj, 'string');
-            case "regexp"   : return stylize('/' + obj.source + '/', 'regexp');
-            case "number"   : return stylize(obj + '',    'number');
-            case "function" : return options.stream ? stylize("Function", 'other') : '[Function]';
-            case "null"     : return stylize("null",      'special');
-            case "undefined": return stylize("undefined", 'special');
-            case "boolean"  : return stylize(obj + '',    'bool');
-            case "date"     : return stylize(obj.toUTCString());
-            case "array"    : return stringifyArray(obj,  options, stack.length);
-            case "object"   : return stringifyObject(obj, options, stack.length);
-        }
-    })(obj);
-
-    stack.pop();
-    return result;
-};
-
-// Escape invisible characters in a string
-function stringifyString (str, options) {
-    return str.replace(/\\/g, '\\\\')
-              .replace(/\n/g, '\\n')
-              .replace(/[\u0001-\u001F]/g, function (match) {
-                  return '\\0' + match[0].charCodeAt(0).toString(8);
-              });
-}
-
-// Convert an array to a string, such as [1, 2, 3].
-// This function calls stringify() for each of the elements
-// in the array.
-function stringifyArray(ary, options, level) {
-    var out = [];
-    var pretty = options.pretty && (ary.length > 4 || ary.some(function (o) {
-        return (o !== null && typeof(o) === 'object' && Object.keys(o).length > 0) ||
-               (Array.isArray(o) && o.length > 0);
-    }));
-    var ws = pretty ? '\n' + new(Array)(level * 4 + 1).join(' ') : ' ';
-
-    for (var i = 0; i < ary.length; i++) {
-        out.push(stringify(ary[i], options));
-    }
-
-    if (out.length === 0) {
-        return '[]';
-    } else {
-        return '[' + ws
-                   + out.join(',' + (pretty ? ws : ' '))
-                   + (pretty ? ws.slice(0, -4) : ws) +
-               ']';
-    }
-};
-
-// Convert an object to a string, such as {a: 1}.
-// This function calls stringify() for each of its values,
-// and does not output functions or prototype values.
-function stringifyObject(obj, options, level) {
-    var out = [];
-    var pretty = options.pretty && (Object.keys(obj).length > 2 ||
-                                    Object.keys(obj).some(function (k) { return typeof(obj[k]) === 'object' }));
-    var ws = pretty ? '\n' + new(Array)(level * 4 + 1).join(' ') : ' ';
-
-    var keys = options.showHidden ? Object.keys(obj) : Object.getOwnPropertyNames(obj);
-    keys.forEach(function (k) {
-        if (Object.prototype.hasOwnProperty.call(obj, k) 
-          && !(obj[k] instanceof Function && options.hideFunctions)) {
-            out.push(eyes.stylize(k, options.styles.key, options.styles) + ': ' +
-                     stringify(obj[k], options));
-        }
-    });
-
-    if (out.length === 0) {
-        return '{}';
-    } else {
-        return "{" + ws
-                   + out.join(',' + (pretty ? ws : ' '))
-                   + (pretty ? ws.slice(0, -4) : ws) +
-               "}";
-   }
-};
-
-// A better `typeof`
-function typeOf(value) {
-    var s = typeof(value),
-        types = [Object, Array, String, RegExp, Number, Function, Boolean, Date];
-
-    if (s === 'object' || s === 'function') {
-        if (value) {
-            types.forEach(function (t) {
-                if (value instanceof t) { s = t.name.toLowerCase() }
-            });
-        } else { s = 'null' }
-    }
-    return s;
-}
-
-function merge(/* variable args */) {
-    var objs = Array.prototype.slice.call(arguments);
-    var target = {};
-
-    objs.forEach(function (o) {
-        Object.keys(o).forEach(function (k) {
-            if (k === 'styles') {
-                if (! o.styles) {
-                    target.styles = false;
-                } else {
-                    target.styles = {}
-                    for (var s in o.styles) {
-                        target.styles[s] = o.styles[s];
-                    }
-                }
-            } else {
-                target[k] = o[k];
-            }
-        });
-    });
-    return target;
-}
-
-
-}).call(this,require('_process'))
-},{"_process":10}],8:[function(require,module,exports){
-
-},{}],9:[function(require,module,exports){
+},{}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/path-browserify/index.js":[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -8422,7 +8169,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":10}],10:[function(require,module,exports){
+},{"_process":"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/process/browser.js"}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -8510,4 +8257,4 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}]},{},[1]);
+},{}]},{},["/Users/gaspard/Projects/canalplus/midi/midi.js"]);
