@@ -67,37 +67,15 @@ var midi2json = function midi2json(blob) {
 			latencyEl = $('#latency'),
 			precisionEl = $('#precision');
 
-	// function timer(){
-	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
-	// 		derive = measuredBeat - Math.floor(measuredBeat);
-	// 	//log('derive',derive,measuredBeat)
 
-	// 	timeEl.html(nBeat);
-	// 	nBeat += 1;
-
-	// 	if( derive * 100 > 1 ) {
-	// 		clearInterval(timerObj);
-	// 		timeoutObj = setTimeout(timeout,tempo - derive * tempo - 0)
-	// 	}
-	// }
-	// function timeout(){
-	// 	var measuredBeat = (new Date().getTime() - debut) / tempo,
-	// 		derive = measuredBeat - Math.floor(measuredBeat);
-	// 	log('derive',derive,measuredBeat);
-
-	// 	timeEl.html(nBeat);
-	// 	nBeat += 1;
-	// 	timerObj = setInterval(timer, tempo);
-	// }
-
-	debut = new Date().getTime();
+	debut = performance.now();
 
 	// timerObj = setInterval(timer, tempo);
 
 	window.onkeydown = function(e) {
 
 		var measuredHit = (e.timeStamp - debut) / tempo,
-			latency = measuredHit - Math.floor(measuredHit);
+				latency = measuredHit - Math.floor(measuredHit);
 
 		var coords = closestInt(measuredHit)
 		keyInts.push(coords[0]);
@@ -111,7 +89,7 @@ var midi2json = function midi2json(blob) {
 
 	function renderLoopRAF(){
 
-	  var currTime = (new Date().getTime() - debut) / tempo;
+	  var currTime = (performance.now() - debut) / tempo;
 
 	  timeRAF.innerHTML = Math.floor(currTime)-1;
 
@@ -129,8 +107,17 @@ var midi2json = function midi2json(blob) {
 
 }
 
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
 
-
+    ctx.fillRect(25,25,100,100);
+    ctx.clearRect(45,45,60,60);
+    ctx.strokeRect(50,50,50,50);
+  }
+}
+draw();
 
 // Math helpers
 

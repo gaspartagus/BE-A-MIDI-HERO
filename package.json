@@ -1,9 +1,8 @@
 {
-  "name": "midi-trainer",
+  "name": "be-a-midi-hero",
   "version": "0.0.1",
 
   "dependencies": {
-    "fs": "latest",
     "midi-converter": "latest",
     "lodash": "latest",
     "eyes": "latest"
